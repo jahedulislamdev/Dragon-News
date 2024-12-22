@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const LS_Content = () => {
    const [newsCategories, setNewsCatagories] = useState([]);
@@ -8,8 +9,9 @@ const LS_Content = () => {
          .then(data => setNewsCatagories(data))
    }, [])
    return (
-      <div>
-         {newsCategories.length}
+      <div className='text-slate-500'>
+         <p className='text-lg font-semibold ms-1'>All Catagories</p>
+         {newsCategories.map(item => <NavLink to={`/categories/${item.id} `} className="block m-2 font-medium p-2" key={item.id}>{item.name}</NavLink>)}
       </div>
    );
 };

@@ -12,7 +12,9 @@ const Home = () => {
          <Navbar></Navbar>
          <div className="grid md:grid-cols-4 border-2 p-4 space-x-2">
             <div className="border-2"><LS_Content /></div>
-            <div className="col-span-2 border-2"> hello world</div>
+            <div className="col-span-2 border-2 ">
+               <p className="text-lg font-semibold text-slate-500 ms-2">Dragon News Home</p>
+            </div>
             <div className="border-2"><RS_Content /></div>
          </div>
       </div>

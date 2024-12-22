@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import UserProfile from '../../assets/user.png'
 const Navbar = () => {
    const navItems = <>
-      <li ><NavLink to={'/'}>Home</NavLink></li>
-      <li ><NavLink to={'/about'}>About</NavLink></li>
-      <li ><NavLink to={'/career'}>Career</NavLink></li>
+      <li><NavLink to={'/'}>Home</NavLink></li>
+      <li><NavLink to={'/about'}>About</NavLink></li>
+      <li><NavLink to={'/career'}>Career</NavLink></li>
    </>
    return (
-      <div className="navbar ">
+      <div className="navbar bg-slate-50 m-1">
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className="lg:hidden">
@@ -20,7 +20,7 @@ const Navbar = () => {
             </div>
          </div>
          <div className="navbar-center hidden lg:flex">
-            <ul className="space-x-5 menu-horizontal px-1">
+            <ul className="space-x-7 menu-horizontal px-1 text-slate-600 font-medium">
                {navItems}
             </ul>
          </div>
