@@ -1,0 +1,18 @@
+.expanded_news_details {
+    max-height: 800px;
+    background: rgb(240, 235, 235);
+    padding: 6px;
+    transition: max-height 0.7s ease-in-out, padding 0.7s ease-in-out;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.expanded_news_details ::-webkit-scrollbar {
+    display: none;
+}
+.news_details {
+    max-height: 200px;
+    overflow: hidden;
+    padding: 6px;
+    transition: max-height 0.7s ease-in-out, padding 0.7s ease-in-out;
+}

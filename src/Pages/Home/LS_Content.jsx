@@ -10,7 +10,6 @@ const LS_Content = () => {
    }, [])
    return (
       <div className='text-slate-500'>
-         <p className='text-lg font-semibold ms-1'>All Catagories</p>
          {newsCategories.map(item => <NavLink to={`/categories/${item.id} `} className="block m-2 font-medium p-2" key={item.id}>{item.name}</NavLink>)}
       </div>
    );
