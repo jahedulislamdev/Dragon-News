@@ -3,9 +3,10 @@ export const dataProvider = createContext(null);
 const NewsDataProvider = ({ children }) => {
    const [news, setNews] = useState([]);
    useEffect(() => {
-      fetch("news.json")
+      fetch("../../../public/news.json")
          .then(res => res.json())
-         .then(data => setNews(data));
+         .then(data => setNews(data))
+         .catch(err => console.error(err))
    }, []);
    return (
       <dataProvider.Provider value={{ news }}>

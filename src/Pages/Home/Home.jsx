@@ -9,13 +9,11 @@ const Home = () => {
       <div>
          <Header />
          <Braking />
-         <Navbar></Navbar>
+         <Navbar />
          <div className="grid md:grid-cols-4 border-2 p-4 space-x-2">
-            <div className="border-2"><LS_Content /></div>
-            <div className="col-span-2 border-2">
-               <M_Content></M_Content>
-            </div>
-            <div className="border-2"><RS_Content /></div>
+            <div><LS_Content /></div>
+            <div className="col-span-2"><M_Content /></div>
+            <div><RS_Content /></div>
          </div>
       </div>
    );

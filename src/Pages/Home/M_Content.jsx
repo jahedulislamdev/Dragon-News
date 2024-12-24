@@ -9,7 +9,6 @@ import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider'
 
 const M_Content = () => {
    const { news } = useContext(dataProvider)
-   console.log(news);
    const [expandedCard, setExpandedCard] = useState(null); // Store expanded card ID
 
    const handleShowHideNewsDetails = (id) => {
