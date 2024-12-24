@@ -8,7 +8,7 @@ const Navbar = () => {
       <li><NavLink to={'/career'}>Career</NavLink></li>
    </>
    return (
-      <div className="navbar bg-slate-50 m-1">
+      <div className="navbar bg-slate-50 m-1 sticky top-0 shadow-gray-300 shadow">
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className="lg:hidden">
