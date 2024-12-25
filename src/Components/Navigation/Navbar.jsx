@@ -14,7 +14,7 @@ const Navbar = () => {
                <div tabIndex={0} role="button" className="lg:hidden">
                   <FcMenu className='size-7'></FcMenu>
                </div>
-               <ul tabIndex={0} className="space-y-3 menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
+               <ul tabIndex={0} className="bg-gray-300 space-y-3 menu-sm dropdown-content rounded z-[1] mt-4 w-52 p-2 shadow">
                   {navItems}
                </ul>
             </div>
