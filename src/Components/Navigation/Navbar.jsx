@@ -29,7 +29,7 @@ const Navbar = () => {
             <div>
                <img className="w-[35px]" src={UserProfile} alt="userProfile" />
             </div>
-            <button className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm"><Link to={'/login'}>Login</Link></button>
+            <button className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm"><Link to={"/login"}>Login</Link></button>
          </div>
       </div>
    );
