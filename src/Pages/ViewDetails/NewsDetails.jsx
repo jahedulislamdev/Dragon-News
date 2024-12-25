@@ -21,12 +21,12 @@ const NewsDetails = () => {
          <button onClick={() => navigate(-1)} className=' flex border p-1 px-3 bg-gray-300 rounded mb-2 ms-2 items-center'><FaArrowLeftLong className='me-1' /> Back</button>
          <div className='grid grid-cols-4 p-2'>
             <div className='col-span-3 p-2 border rounded-l'>
-               <img className="w-full max-h-[360px] mx-auto rounded-sm" src={selectedNews.image_url} alt="" />
+               <img className="w-full max-h-[390px] mx-auto rounded-sm" src={selectedNews.image_url} alt="" />
                <p className="text-lg font-semibold my-3">{selectedNews.title}</p>
                <p className='font-light text-justify bg-gray-100 p-1'>{selectedNews.details}</p>
                <Link to={"/"} ><button className='flex items-center mt-3 bg-red-600 text-white p-1 rounded text-sm'><FaArrowLeftLong className='me-1' /> All News in this category</button>   </Link>
             </div>
-            <div className='border-y border-r rounded-r'>
+            <div className='border-y border-r rounded-r mx-auto'>
                <RS_Content />
             </div>
          </div>

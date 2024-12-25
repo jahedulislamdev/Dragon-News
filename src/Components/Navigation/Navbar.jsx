@@ -1,12 +1,15 @@
 import { FcMenu } from "react-icons/fc";
 import { Link, NavLink } from "react-router-dom";
 import UserProfile from '../../assets/user.png'
+import { useContext } from "react";
+import { dataProvider } from "../ContextProvider/NewsDataProvider";
 const Navbar = () => {
    const navItems = <>
       <li><NavLink to={'/'}>Home</NavLink></li>
       <li><NavLink to={'/about'}>About</NavLink></li>
       <li><NavLink to={'/career'}>Career</NavLink></li>
    </>
+   const { user, handleLogout } = useContext(dataProvider);
    return (
       <div className="navbar bg-slate-50 sticky top-0 border-b border-gray-400">
          <div className="navbar-start">
@@ -29,7 +32,8 @@ const Navbar = () => {
             <div>
                <img className="w-[35px]" src={UserProfile} alt="userProfile" />
             </div>
-            <button className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm"><Link to={"/login"}>Login</Link></button>
+            {user ? <button onClick={handleLogout} className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm">Logout</button> :
+               <button className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm"><Link to={"/login"}>Login</Link></button>}
          </div>
       </div>
    );

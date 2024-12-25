@@ -11,7 +11,7 @@ const Braking = () => {
          <button className="p-4 bg-red-700 text-white rounded-l-lg ">Latest</button>
          <Marquee pauseOnHover={true}>
             {
-               LatestFiveNews.map(item => <Link to={`/news/${item._id}`} className="me-7 ">{item.title}</Link>)
+               LatestFiveNews.map(item => <Link key={item._id} to={`/news/${item._id}`} className="me-7 ">{item.title}</Link>)
             }
          </Marquee>
       </div>

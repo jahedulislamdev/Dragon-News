@@ -9,14 +9,21 @@ import toast, { Toaster } from 'react-hot-toast';
 const Registration = () => {
    const [showPass, setShowPass] = useState(false);
    const { createUser, setUser } = useContext(dataProvider);
+   const [passErr, SetPassErr] = useState();
    const handlesubmit = (e) => {
       e.preventDefault();
+      SetPassErr("")
       const UserData = new FormData(e.currentTarget)
       const Email = UserData.get("email");
       const Name = UserData.get("name")
       const Profile = UserData.get("photo")
       const Password = UserData.get("password")
-
+      //Password validation with Regex
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(Password)) {
+         SetPassErr("Password must be 8+ chars with letters, numbers & special symbols.");
+         return;
+      }
       //create new user
       createUser(Email, Password)
          .then((userCredential) => {
@@ -26,7 +33,6 @@ const Registration = () => {
          })
          .catch(err => {
             toast.error(err.code)
-            console.error(err)
          })
    }
    return (
@@ -38,9 +44,9 @@ const Registration = () => {
                <hr className='border border-gray-300 my-3 w-11/12 mx-auto' />
                <div className="form-control mb-3">
                   <label className="label">
-                     <span className="label-text font-medium" >Your Name</span>
+                     <span className="label-text font-medium" >Your Username</span>
                   </label>
-                  <input type="text" name="name" placeholder='Enter Your Name' className='p-2 bg-gray-100 border focus:outline-none' />
+                  <input type="text" name="name" placeholder='@username' className='p-2 bg-gray-100 border focus:outline-none' required />
                </div>
                <div className="form-control mb-3">
                   <label className="label">
@@ -52,16 +58,17 @@ const Registration = () => {
                   <label className="label">
                      <span className="label-text font-medium">Email</span>
                   </label>
-                  <input type="email" name="email" placeholder='example@gmail.com' className='p-2 bg-gray-100 border focus:outline-none' />
+                  <input type="email" name="email" placeholder='example@gmail.com' className='p-2 bg-gray-100 border focus:outline-none' required />
                </div>
                <div className="form-control mb-3">
                   <label className="label">
                      <span className="label-text font-medium">Password</span>
                   </label>
                   <div className="join">
-                     <input type={showPass ? "text" : "password"} name="password" placeholder='Enter Your Password' className='rounded-none w-full join-item p-2 bg-gray-100 border focus:outline-none' />
+                     <input type={showPass ? "text" : "password"} name="password" placeholder='Enter Your Password' required className='rounded-none w-full join-item p-2 bg-gray-100 border focus:outline-none' />
                      <button onClick={() => setShowPass(!showPass)} type='button' className='join-item p-1 bg-gray-100 border-r border-y rounded-none'> {showPass ? <IoEyeOutline className='size-5' /> : <IoEyeOffOutline className='size-5' />} </button>
                   </div>
+                  <p className='text-sm text-red-600 p-1'>{passErr}</p>
                </div>
                <div className="form-control">
                   <div className="flex space-x-1 items-center">
