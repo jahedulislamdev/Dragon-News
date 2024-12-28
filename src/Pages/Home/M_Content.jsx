@@ -54,6 +54,7 @@ const M_Content = () => {
                >
                   {expandedCard === N._id ? "Show Less" : "Show More"}
                </button>}
+               {/* <Link to={`/news/${N._id}`}>Show more</Link> */}
                <hr className='border border-gray-300 mt-3 px-9' />
                <div className='flex justify-between items-center'>
                   <div className='flex space-x-2 my-2'>

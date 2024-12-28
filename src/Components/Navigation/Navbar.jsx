@@ -30,7 +30,8 @@ const Navbar = () => {
          <div className="navbar-end">
             {/* dynamic user image */}
             <div>
-               <img className="w-[35px]" src={UserProfile} alt="userProfile" />
+               {user?.photoURL ? <img className="w-[35px] h-[35px] object-cover object-center rounded-full" src={user.photoURL} alt="userProfile" /> :
+                  <img className="w-[35px] h-[35px] object-cover object-center rounded-full" src={UserProfile} alt="userProfile" />}
             </div>
             {user ? <button onClick={handleLogout} className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm">Logout</button> :
                <button className="px-4 bg-red-600 text-white py-2 rounded ms-2 text-sm"><Link to={"/login"}>Login</Link></button>}

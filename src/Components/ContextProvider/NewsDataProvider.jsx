@@ -12,7 +12,7 @@ const NewsDataProvider = ({ children }) => {
          .then(data => setNews(data))
          .catch(err => console.error(err))
    }, []);
-   const auth = getAuth(app)
+   const auth = getAuth(app);
    //create userWith Email & password
    const [user, setUser] = useState()
    const createUser = (email, password) => {
@@ -26,7 +26,6 @@ const NewsDataProvider = ({ children }) => {
    //ovserve user 
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, currentUser => {
-         console.log("user in the auth state changed", currentUser)
          setUser(currentUser);
          setLoader(false)
       });
@@ -45,9 +44,8 @@ const NewsDataProvider = ({ children }) => {
             return;
          });
    }
-
    return (
-      <dataProvider.Provider value={{ news, createUser, userLogin, user, setUser, handleLogout, loader }}>
+      <dataProvider.Provider value={{ news, createUser, userLogin, user, setUser, handleLogout, loader, }}>
          {children}
       </dataProvider.Provider>
    );

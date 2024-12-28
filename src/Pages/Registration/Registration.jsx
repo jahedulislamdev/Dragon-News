@@ -1,40 +1,55 @@
 import React, { useContext, useState } from 'react';
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import { } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import Navbar from '../../Components/Navigation/Navbar';
 import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider';
+import { updateProfile } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 
 const Registration = () => {
    const [showPass, setShowPass] = useState(false);
-   const { createUser, setUser } = useContext(dataProvider);
-   const [passErr, SetPassErr] = useState();
+   const { createUser, user, setUser } = useContext(dataProvider);
+   const [passErr, SetPassErr] = useState("");
+
    const handlesubmit = (e) => {
       e.preventDefault();
-      SetPassErr("")
-      const UserData = new FormData(e.currentTarget)
+      SetPassErr("");
+
+      const UserData = new FormData(e.currentTarget);
       const Email = UserData.get("email");
-      const Name = UserData.get("name")
-      const Profile = UserData.get("photo")
-      const Password = UserData.get("password")
-      //Password validation with Regex
+      const Name = UserData.get("name");
+      const Profile = UserData.get("photo"); // You may need to handle file uploads
+      const Password = UserData.get("password");
+      const termsAccepted = e.target.terms.checked
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       if (!passwordRegex.test(Password)) {
-         SetPassErr("Password must be 8+ chars with letters, numbers & special symbols.");
+         SetPassErr("Password must contain at least 8 characters, including letters, numbers, and symbols.");
          return;
       }
-      //create new user
+
+      if (!termsAccepted) {
+         toast.error("You must accept the Terms & Conditions");
+         return;
+      }
+
       createUser(Email, Password)
          .then((userCredential) => {
-            setUser(userCredential.user)
-            e.target.reset();
-            toast.success("User Registerd Successfully !")
+            updateProfile(userCredential.user, {
+               displayName: Name,
+               photoURL: Profile,
+            }).then(() => {
+               setUser(userCredential.user);
+               console.log(userCredential.user);
+               e.target.reset();
+               toast.success("User Registered Successfully!");
+            })
+            return;
          })
          .catch(err => {
-            toast.error(err.code)
-         })
-   }
+            toast.error(err.code);
+         });
+   };
+
    return (
       <div>
          <Navbar />
@@ -44,15 +59,15 @@ const Registration = () => {
                <hr className='border border-gray-300 my-3 w-11/12 mx-auto' />
                <div className="form-control mb-3">
                   <label className="label">
-                     <span className="label-text font-medium" >Your Username</span>
+                     <span className="label-text font-medium">Your Username</span>
                   </label>
                   <input type="text" name="name" placeholder='@username' className='p-2 bg-gray-100 border focus:outline-none' required />
                </div>
                <div className="form-control mb-3">
                   <label className="label">
-                     <span className="label-text font-medium">Photo URl</span>
+                     <span className="label-text font-medium">Photo URL</span>
                   </label>
-                  <input type="file" name="photo" placeholder='Select your Profile' className='p-2 bg-gray-100 border focus:border-violet-600' />
+                  <input type="url" name="photo" className='p-2 bg-gray-100 border focus:border-violet-600' />
                </div>
                <div className="form-control mb-3">
                   <label className="label">
@@ -66,23 +81,29 @@ const Registration = () => {
                   </label>
                   <div className="join">
                      <input type={showPass ? "text" : "password"} name="password" placeholder='Enter Your Password' required className='rounded-none w-full join-item p-2 bg-gray-100 border focus:outline-none' />
-                     <button onClick={() => setShowPass(!showPass)} type='button' className='join-item p-1 bg-gray-100 border-r border-y rounded-none'> {showPass ? <IoEyeOutline className='size-5' /> : <IoEyeOffOutline className='size-5' />} </button>
+                     <button
+                        onClick={(e) => {
+                           e.preventDefault();
+                           setShowPass(!showPass);
+                        }}
+                        type='button'
+                        className='join-item p-1 bg-gray-100 border-r border-y rounded-none'
+                     >
+                        {showPass ? <IoEyeOutline className='size-5' /> : <IoEyeOffOutline className='size-5' />}
+                     </button>
                   </div>
                   <p className='text-sm text-red-600 p-1'>{passErr}</p>
                </div>
                <div className="form-control">
                   <div className="flex space-x-1 items-center">
-                     <input type="checkbox" className="checkbox-xs checkbox rounded border-gray-700" />
+                     <input name='terms' type="checkbox" className="checkbox-xs checkbox rounded border-gray-700" />
                      <span className='label-text'>Accept <a href="">Terms & Conditions</a></span>
                   </div>
                </div>
                <button type='submit' className='w-full bg-gray-700 text-white p-2 mt-3 rounded-sm'>Register</button>
-               <p className='mt-2 text-sm'>Already Have an Account ? <Link to={'/login'} className='font-semibold'>Login</Link></p>
+               <p className='mt-2 text-sm'>Already Have an Account? <Link to={'/login'} className='font-semibold'>Login</Link></p>
             </form>
-            <Toaster
-               position="top-right"
-               reverseOrder={true}
-            />
+            <Toaster position="top-right" reverseOrder={true} />
          </div>
       </div>
    );
