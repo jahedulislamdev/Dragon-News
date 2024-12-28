@@ -16,7 +16,7 @@ const LS_Content = () => {
          {newsCategories.map(item => <NavLink to={`/categories/${item.id} `} className="block m-2 font-medium p-2" key={item.id}>{item.name}</NavLink>)}
          {/* news cards */}
          <div className='text-black mb-3'>
-            <img className='rounded max-h-[250px]' src={demoCard} alt="" />
+            <img className='rounded w-full max-h-[250px]' src={demoCard} alt="" />
             <p className='mt-1 font-medium'>Bayern Slams Authorities Over Flight Delay to Club World Cup</p>
             <div className='flex items-center space-x-3 mt-1 text-gray-500'>
                <p>Sports</p>
@@ -25,7 +25,7 @@ const LS_Content = () => {
             </div>
          </div>
          <div className='text-black mb-3'>
-            <img className='rounded max-h-[250px]' src={demo2} alt="" />
+            <img className='rounded w-full max-h-[250px]' src={demo2} alt="" />
             <p className='mt-1 font-medium'>Bayern Slams Authorities Over Flight Delay to Club World Cup</p>
             <div className='flex items-center space-x-3 mt-1 text-gray-500'>
                <p>Sports</p>
@@ -34,7 +34,7 @@ const LS_Content = () => {
             </div>
          </div>
          <div className='text-black mb-3'>
-            <img className='rounded max-h-[250px]' src={demo3} alt="" />
+            <img className='rounded w-full max-h-[250px]' src={demo3} alt="" />
             <p className='mt-1 font-medium'>Bayern Slams Authorities Over Flight Delay to Club World Cup</p>
             <div className='flex items-center space-x-3 mt-1 text-gray-500'>
                <p>Sports</p>

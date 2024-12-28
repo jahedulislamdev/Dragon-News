@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import Header from "../../Components/Header/Header";
 import Navbar from "../../Components/Navigation/Navbar";
 import Braking from "./Braking";
@@ -15,6 +16,10 @@ const Home = () => {
             <div className="col-span-2"><M_Content /></div>
             <div><RS_Content /></div>
          </div>
+         <Toaster
+            position="top-right"
+            reverseOrder={true}
+         />
       </div>
    );
 };

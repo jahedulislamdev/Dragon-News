@@ -1,13 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navigation/Navbar';
 import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider';
 import toast, { Toaster } from 'react-hot-toast';
 const Login = () => {
    const [showPass, setShowPass] = useState(false);
-   const { userLogin, setUser } = useContext(dataProvider);
+   const { userLogin, setUser, user } = useContext(dataProvider);
    const [err, setErr] = useState(null);
+   const location = useLocation();
+   const navigateAfterLogin = useNavigate();
    const handlesubmit = (e) => {
       e.preventDefault();
       setErr("");
@@ -21,16 +23,23 @@ const Login = () => {
          return;
       }
       //create new user
+      if (user) {
+         toast.error("You are Already Logged In")
+         return;
+      }
       userLogin(Email, Password)
          .then((userCredential) => {
             setUser(userCredential.user)
-            console.log(userCredential.user)
+            navigateAfterLogin(location?.state ? location.state : '/') //navigate after login
             e.target.reset();
             toast.success("User Login Successfully !")
          })
          .catch(err => {
-            toast.error(err.code)
-            console.error(err)
+            if (err.code == "auth/invalid-credential") {
+               toast.error("Invalid Email or Password")
+            } else {
+               toast.error(err.code)
+            }
          })
    }
    return (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CiBookmark } from 'react-icons/ci';
 import { IoMdShare, IoMdEye } from 'react-icons/io';
 import './Home.css';
@@ -10,17 +10,15 @@ import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider'
 const M_Content = () => {
    const { news } = useContext(dataProvider)
    const [expandedCard, setExpandedCard] = useState(null); // Store expanded card ID
-
    const handleShowHideNewsDetails = (id) => {
       setExpandedCard((prevId) => (prevId === id ? null : id)); // Toggle  based on the card ID
    };
-
    return (
       <div className="ms-2">
          {news.map((N) => (
             <div key={N._id} className="mb-5 text-black bg-gray-50 p-3 rounded-lg">
                {/* Card header */}
-               <div className="flex justify-between items-center bg-gray-200 p-3 rounded-t">
+               <div className="flex justify-between items-center bg-gray-200 p-2 rounded-t">
                   <div className="flex">
                      <img className="w-[40px] h-[40px] border border-gray-300 rounded-full object-center me-2 " src={N.author.img} alt="author"
                      />
