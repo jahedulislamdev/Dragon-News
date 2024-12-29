@@ -31,7 +31,6 @@ const Registration = () => {
          toast.error("You must accept the Terms & Conditions");
          return;
       }
-
       createUserWithEmailAndPass(Email, Password)
          .then((userCredential) => {
             updateProfile(userCredential.user, {
@@ -39,7 +38,6 @@ const Registration = () => {
                photoURL: Profile,
             })
                .then(() => {
-                  setUser(userCredential.user);
                   e.target.reset();
                })
                .catch((error) => { toast.error(error.message) })

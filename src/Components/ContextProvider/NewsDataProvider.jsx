@@ -42,7 +42,9 @@ const NewsDataProvider = ({ children }) => {
    //ovserve user 
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, currentUser => {
-         setUser(currentUser);
+         if (user) {
+            setUser(currentUser);
+         }
          setLoader(false)
       });
       return () => {

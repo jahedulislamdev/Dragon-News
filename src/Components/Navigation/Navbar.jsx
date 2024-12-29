@@ -29,6 +29,7 @@ const Navbar = () => {
          </div>
          <div className="navbar-end">
             {/* dynamic user image */}
+            {user?.displayName && <p className="sm:none md:block me-1">{user.displayName}</p>}
             <div>
                {user?.photoURL ? <img className="w-[35px] h-[35px] object-cover object-center rounded-full" src={user.photoURL} alt="userProfile" /> :
                   <img className="w-[35px] h-[35px] object-cover object-center rounded-full" src={UserProfile} alt="userProfile" />}

@@ -29,6 +29,10 @@ const Login = () => {
       }
       userLogin(Email, Password)
          .then((userCredential) => {
+            if (!userCredential.user.emailVerified) {
+               toast.error("Please Varify your email first!")
+               return;
+            }
             setUser(userCredential.user)
             navigateAfterLogin(location?.state ? location.state : '/') //navigate after login
             e.target.reset();
