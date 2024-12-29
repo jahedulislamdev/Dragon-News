@@ -29,6 +29,7 @@ const NewsDataProvider = ({ children }) => {
                photoURL: res.user.photoURL,
             }).then(() => {
                setUser(res.user)
+               console.log(res.user)
             }).catch((err) => { toast.error(err.message) })
          })
          .catch((err) => {
