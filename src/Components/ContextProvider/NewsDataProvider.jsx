@@ -7,10 +7,17 @@ const NewsDataProvider = ({ children }) => {
    const [news, setNews] = useState([]);
    const [loader, setLoader] = useState(true)
    useEffect(() => {
-      fetch("../../../public/news.json")
+      setLoader(true)
+      fetch("/news.json")
          .then(res => res.json())
-         .then(data => setNews(data))
-         .catch(err => console.error(err))
+         .then(data => {
+            setNews(data)
+            setLoader(false)
+         })
+         .catch(err => {
+            console.error(err);
+            setLoader(false);
+         })
    }, []);
    const auth = getAuth(app);
    //create userWith Email & password
@@ -21,6 +28,7 @@ const NewsDataProvider = ({ children }) => {
    }
    //create user with google 
    const createUserWithGoogle = () => {
+      setLoader(true)
       const GoogleProvider = new GoogleAuthProvider();
       signInWithPopup(auth, GoogleProvider)
          .then((res) => {
@@ -33,10 +41,12 @@ const NewsDataProvider = ({ children }) => {
          })
          .catch((err) => {
             toast.error(err.code)
+            setLoader(false)
          })
    }
    // login User with github
    const createUserWithGithub = () => {
+      setLoader(true)
       const providerGithub = new GithubAuthProvider();
       signInWithPopup(auth, providerGithub)
          .then((res) => {
@@ -49,6 +59,7 @@ const NewsDataProvider = ({ children }) => {
          })
          .catch((err) => {
             toast.error(err.code)
+            setLoader(false)
          })
    }
    const userLogin = (email, password) => {
@@ -77,6 +88,7 @@ const NewsDataProvider = ({ children }) => {
             setUser(null);
             return;
          });
+      setLoader(false)
    }
    return (
       <dataProvider.Provider value={{ news, createUserWithGoogle, createUserWithEmailAndPass, createUserWithGithub, userLogin, user, setUser, handleLogout, loader, }}>
