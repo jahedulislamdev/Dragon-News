@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import app from '../../Firebase/Firebase';
 import toast from 'react-hot-toast';
 export const dataProvider = createContext(null);
@@ -15,9 +15,25 @@ const NewsDataProvider = ({ children }) => {
    const auth = getAuth(app);
    //create userWith Email & password
    const [user, setUser] = useState()
-   const createUser = (email, password) => {
+   const createUserWithEmailAndPass = (email, password) => {
       setLoader(true)
       return createUserWithEmailAndPassword(auth, email, password)
+   }
+   //create user with google 
+   const createUserWithGoogle = () => {
+      const GoogleProvider = new GoogleAuthProvider();
+      signInWithPopup(auth, GoogleProvider)
+         .then((res) => {
+            updateProfile(res.user, {
+               displayName: res.user.displayName,
+               photoURL: res.user.photoURL,
+            }).then(() => {
+               setUser(res.user)
+            }).catch((err) => { toast.error(err.message) })
+         })
+         .catch((err) => {
+            toast.error(err.code)
+         })
    }
    const userLogin = (email, password) => {
       setLoader(true)
@@ -45,7 +61,7 @@ const NewsDataProvider = ({ children }) => {
          });
    }
    return (
-      <dataProvider.Provider value={{ news, createUser, userLogin, user, setUser, handleLogout, loader, }}>
+      <dataProvider.Provider value={{ news, createUserWithGoogle, createUserWithEmailAndPass, userLogin, user, setUser, handleLogout, loader, }}>
          {children}
       </dataProvider.Provider>
    );

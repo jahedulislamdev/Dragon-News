@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaFacebookSquare, FaGithub, FaGoogle, FaInstagramSquare, } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Swimming from '../../assets/swimming.png'
 import PlayGround from '../../assets/playground.png'
 import Classroom from '../../assets/class.png'
+import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider';
 const RS_Content = () => {
+   const { createUserWithGoogle } = useContext(dataProvider);
    return (
       <div>
          <p className='text-lg text-slate-500 font-semibold ms-2 mb-3'>Login with</p>
          <div className='px-2'>
-            <button className='w-full p-2 bg-blue-500 text-white rounded my-1 flex items-center justify-center'><FaGoogle className='me-1' /> Login with Google</button>
+            <button onClick={createUserWithGoogle} className='w-full p-2 bg-blue-500 text-white rounded my-1 flex items-center justify-center'><FaGoogle className='me-1' /> Login with Google</button>
             <button className='w-full p-2 bg-gray-600 text-white rounded my-1 flex items-center justify-center'><FaGithub className='me-1' /> Login with Github</button>
          </div>
          <p className='text-lg ms-2 font-semibold text-slate-500 mt-5'>Find Us On</p>

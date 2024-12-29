@@ -3,12 +3,12 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import Navbar from '../../Components/Navigation/Navbar';
 import { dataProvider } from '../../Components/ContextProvider/NewsDataProvider';
-import { updateProfile } from "firebase/auth";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 import toast, { Toaster } from 'react-hot-toast';
 
 const Registration = () => {
    const [showPass, setShowPass] = useState(false);
-   const { createUser, user, setUser } = useContext(dataProvider);
+   const { createUserWithEmailAndPass, setUser } = useContext(dataProvider);
    const [passErr, SetPassErr] = useState("");
 
    const handlesubmit = (e) => {
@@ -18,7 +18,7 @@ const Registration = () => {
       const UserData = new FormData(e.currentTarget);
       const Email = UserData.get("email");
       const Name = UserData.get("name");
-      const Profile = UserData.get("photo"); // You may need to handle file uploads
+      const Profile = UserData.get("photo");
       const Password = UserData.get("password");
       const termsAccepted = e.target.terms.checked
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -26,24 +26,28 @@ const Registration = () => {
          SetPassErr("Password must contain at least 8 characters, including letters, numbers, and symbols.");
          return;
       }
-
+      // If someone does not accept our conditions, they will not be able to register.
       if (!termsAccepted) {
          toast.error("You must accept the Terms & Conditions");
          return;
       }
 
-      createUser(Email, Password)
+      createUserWithEmailAndPass(Email, Password)
          .then((userCredential) => {
             updateProfile(userCredential.user, {
                displayName: Name,
                photoURL: Profile,
-            }).then(() => {
-               setUser(userCredential.user);
-               console.log(userCredential.user);
-               e.target.reset();
-               toast.success("User Registered Successfully!");
             })
-            return;
+               .then(() => {
+                  setUser(userCredential.user);
+                  e.target.reset();
+               })
+               .catch((error) => { toast.error(error.message) })
+            sendEmailVerification(userCredential.user)
+               .then(() => {
+                  alert("we send a varification email, please varify your account.")
+               })
+            toast.success("User Registered Successfully!");
          })
          .catch(err => {
             toast.error(err.code);
