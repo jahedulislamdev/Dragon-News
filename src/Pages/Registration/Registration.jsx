@@ -20,37 +20,49 @@ const Registration = () => {
       const Name = UserData.get("name");
       const Profile = UserData.get("photo");
       const Password = UserData.get("password");
-      const termsAccepted = e.target.terms.checked
+      const termsAccepted = e.target.terms.checked;
+
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       if (!passwordRegex.test(Password)) {
          SetPassErr("Password must contain at least 8 characters, including letters, numbers, and symbols.");
          return;
       }
-      // If someone does not accept our conditions, they will not be able to register.
+      // If someone does not accept the terms, prevent registration
       if (!termsAccepted) {
          toast.error("You must accept the Terms & Conditions");
          return;
       }
+
       createUserWithEmailAndPass(Email, Password)
          .then((userCredential) => {
+            // Update the user's profile
             updateProfile(userCredential.user, {
                displayName: Name,
                photoURL: Profile,
             })
                .then(() => {
                   e.target.reset();
+                  // Send email verification
+                  sendEmailVerification(userCredential.user)
+                     .then(() => {
+                        alert("Verification email sent! Please verify your account.");
+                     })
+                     .catch((error) => {
+                        toast.error("Failed to send verification email: " + error.message);
+                     });
                })
-               .catch((error) => { toast.error(error.message) })
-            sendEmailVerification(userCredential.user)
-               .then(() => {
-                  alert("we send a varification email, please varify your account.")
-               })
-            toast.success("User Registered Successfully!");
+               .catch((error) => {
+                  toast.error("Failed to update profile: " + error.message);
+               });
+
+            // Notify the user of successful registration
+            toast.success("User registered successfully! Please log in after verifying your email.");
          })
-         .catch(err => {
-            toast.error(err.code);
+         .catch((err) => {
+            toast.error("Registration failed: " + err.message);
          });
    };
+
 
    return (
       <div>
