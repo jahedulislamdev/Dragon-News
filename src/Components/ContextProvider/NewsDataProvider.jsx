@@ -29,6 +29,10 @@ const NewsDataProvider = ({ children }) => {
    //create user with google 
    const createUserWithGoogle = () => {
       setLoader(true)
+      if (user) {
+         toast.error("You are already Login!");
+         return;
+      }
       const GoogleProvider = new GoogleAuthProvider();
       signInWithPopup(auth, GoogleProvider)
          .then((res) => {
@@ -47,6 +51,10 @@ const NewsDataProvider = ({ children }) => {
    // login User with github
    const createUserWithGithub = () => {
       setLoader(true)
+      if (user) {
+         toast.error("You are already Login!");
+         return;
+      }
       const providerGithub = new GithubAuthProvider();
       signInWithPopup(auth, providerGithub)
          .then((res) => {

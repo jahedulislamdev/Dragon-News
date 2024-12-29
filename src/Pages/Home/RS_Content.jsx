@@ -16,9 +16,9 @@ const RS_Content = () => {
          </div>
          <p className='text-lg ms-2 font-semibold text-slate-500 mt-5'>Find Us On</p>
          <div className=' p-3'>
-            <button className='w-full flex items-center border-gray-600 p-3 border rounded-t'> <FaFacebookSquare className='size-6 me-3 text-blue-500' /><a href="#">Facebook</a></button>
-            <button className='w-full flex items-center border-gray-600 p-3 border-x '> <FaInstagramSquare className='size-6 me-3 text-pink-500' /><a href="#">Instagram</a></button>
-            <button className='w-full flex items-center border-gray-600 p-3 border rounded-b'> <FaXTwitter className='size-6 me-3' /><a href="#">Twitter</a></button>
+            <button className='w-full flex items-center border-gray-600 p-3 border rounded-t'> <FaFacebookSquare className='size-6 me-3 text-blue-500' /><a href="https://www.facebook.com/jahedulislam.jishan.9" target='_blank'>Facebook</a></button>
+            <button className='w-full flex items-center border-gray-600 p-3 border-x '> <FaInstagramSquare className='size-6 me-3 text-pink-500' /><a href="https://www.instagram.com/m_jishan_2?fbclid=IwY2xjawHeZ7NleHRuA2FlbQIxMAABHW5F768-GZdFVL_2vgIsp7ljRRzpkEDatJ6QH_Z9hKMiQf2DXCc1HtMrUQ_aem_v6vm7Nz89_BW8mfyY6mmYA" target='_blank'>Instagram</a></button>
+            <button className='w-full flex items-center border-gray-600 p-3 border rounded-b'> <FaXTwitter className='size-6 me-3' /><a href="https://x.com/JISHAN0002" target='_blank'>Twitter</a></button>
          </div>
          <div>
             <p className='text-lg ms-2 font-semibold text-slate-500 mt-3'>Q-Zone</p>
