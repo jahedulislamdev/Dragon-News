@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import app from '../../Firebase/Firebase';
 import toast from 'react-hot-toast';
 export const dataProvider = createContext(null);
@@ -29,7 +29,22 @@ const NewsDataProvider = ({ children }) => {
                photoURL: res.user.photoURL,
             }).then(() => {
                setUser(res.user)
-               console.log(res.user)
+            }).catch((err) => { toast.error(err.message) })
+         })
+         .catch((err) => {
+            toast.error(err.code)
+         })
+   }
+   // login User with github
+   const createUserWithGithub = () => {
+      const providerGithub = new GithubAuthProvider();
+      signInWithPopup(auth, providerGithub)
+         .then((res) => {
+            updateProfile(res.user, {
+               displayName: res.user.displayName,
+               photoURL: res.user.photoURL,
+            }).then(() => {
+               setUser(res.user)
             }).catch((err) => { toast.error(err.message) })
          })
          .catch((err) => {
@@ -64,7 +79,7 @@ const NewsDataProvider = ({ children }) => {
          });
    }
    return (
-      <dataProvider.Provider value={{ news, createUserWithGoogle, createUserWithEmailAndPass, userLogin, user, setUser, handleLogout, loader, }}>
+      <dataProvider.Provider value={{ news, createUserWithGoogle, createUserWithEmailAndPass, createUserWithGithub, userLogin, user, setUser, handleLogout, loader, }}>
          {children}
       </dataProvider.Provider>
    );
